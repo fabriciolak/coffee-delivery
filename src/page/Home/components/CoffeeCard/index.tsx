@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-
 import { Minus, Plus, ShoppingCart } from 'phosphor-react'
+
 import {
   CoffeeCartButton,
   CoffeeContainer,
@@ -9,12 +9,15 @@ import {
   CoffeeOrderButton,
   CoffeeTag,
 } from './styles'
+import { useContext, useState } from 'react'
+import { CoffeeContext } from '../../../../contexts/Coffee'
 
 interface CoffeeCardProps {
+  id: string
   name: string
   description: string
   image: string
-  price: string | number
+  price: number
   tags: string[]
 }
 
@@ -23,6 +26,28 @@ interface DataCoffee {
 }
 
 export function CoffeeCard({ data }: DataCoffee) {
+  const { incrementProduct, decrementProduct, cart } = useContext(CoffeeContext)
+
+  const productCartExists = cart && cart.find((item) => item.id === data.id)
+
+  const [amount, setAmount] = useState(
+    (productCartExists && productCartExists.quantity) || 1,
+  )
+
+  function handleUpdateProductAmount(type: 'add' | 'remove') {
+    if (type === 'remove') {
+      if (amount <= 0) return
+
+      setAmount(amount - 1)
+      if (productCartExists) decrementProduct(data.id)
+    } else {
+      setAmount(amount + 1)
+      console.log('click')
+
+      if (productCartExists) incrementProduct(data.id)
+    }
+  }
+
   return (
     <CoffeeContainer>
       <img src={data.image} alt="" width={120} />
@@ -39,15 +64,19 @@ export function CoffeeCard({ data }: DataCoffee) {
 
       <CoffeeFooter>
         <p>
-          <span>R$</span> {data.price}
+          <span>R$</span>{' '}
+          {Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }).format(data.price)}
         </p>
         <div>
           <CoffeeOrderButton>
-            <button>
+            <button onClick={() => handleUpdateProductAmount('remove')}>
               <Minus size={14} weight="fill" />
             </button>
-            <span>1</span>
-            <button>
+            <span>{amount}</span>
+            <button onClick={() => handleUpdateProductAmount('add')}>
               <Plus size={14} weight="fill" />
             </button>
           </CoffeeOrderButton>
@@ -55,7 +84,7 @@ export function CoffeeCard({ data }: DataCoffee) {
             <Link to="/checkout">
               <ShoppingCart color="#F3F2F2" size={22} weight="fill" />
             </Link>
-            {/* <span className="button-legend">1</span> */}
+            {/* {quantity ? <span className="button-legend">{quantity}</span> : ''} */}
           </CoffeeCartButton>
         </div>
       </CoffeeFooter>

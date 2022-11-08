@@ -1,3 +1,4 @@
+import { FormEvent } from 'react'
 import {
   Bank,
   CreditCard,
@@ -5,9 +6,9 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
-import { FormEvent } from 'react'
-import { CartItem } from './CartItem'
 import * as Coffee from './styles'
+
+import { CartItem } from './CartItem'
 
 export function Checkout() {
   function handleSubmit(e: FormEvent) {
