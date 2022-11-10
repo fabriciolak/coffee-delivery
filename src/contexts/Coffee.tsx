@@ -47,6 +47,10 @@ export function CoffeeContextProvider({ children }: CoffeeContextProps) {
   const [cartState, dispatch] = useReducer(coffeeReducer, { cart: [] }, () => {
     const storedStateJson = localStorage.getItem('@coffee-delivery-cart')
     if (storedStateJson) return JSON.parse(storedStateJson)
+
+    return {
+      cart: [],
+    }
   })
 
   console.log(cartState)
