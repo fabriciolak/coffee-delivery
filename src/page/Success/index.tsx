@@ -2,8 +2,20 @@ import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
 import * as S from './styles'
 
 import successOrder from '../../assets/success-order.png'
+import { useContext } from 'react'
+import { CoffeeContext } from '../../contexts/Coffee'
 
 export function Success() {
+  const { confirmOrder } = useContext(CoffeeContext)
+
+  const paymentMethod = (method: 'credit' | 'debit' | 'cash') => {
+    if (method === 'cash') return 'Dinheiro'
+    if (method === 'credit') return 'Cartão de crédito'
+    if (method === 'debit') return 'Cartão de débito'
+
+    return 'hmm..'
+  }
+
   return (
     <S.Container>
       <div>
@@ -17,9 +29,15 @@ export function Success() {
               </S.Icon>
               <div>
                 <p>
-                  Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+                  Entrega em{' '}
+                  <strong>
+                    {confirmOrder.rua}, {confirmOrder.numero}
+                  </strong>
                 </p>
-                <p>Farrapos - Porto Alegre, RS</p>
+                <p>
+                  {confirmOrder.bairro} - {confirmOrder.cidade},{' '}
+                  {confirmOrder.uf}
+                </p>
               </div>
             </li>
 
@@ -42,7 +60,7 @@ export function Success() {
               <div>
                 <p>Pagamento na entrega</p>
                 <p>
-                  <strong>Cartão de Crédito</strong>
+                  <strong>{paymentMethod(confirmOrder.method)}</strong>
                 </p>
               </div>
             </li>

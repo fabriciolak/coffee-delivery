@@ -1,4 +1,6 @@
 import { Minus, Plus, Trash } from 'phosphor-react'
+import { useContext } from 'react'
+import { CoffeeContext } from '../../../contexts/Coffee'
 import {
   Cart,
   CartContent,
@@ -8,33 +10,52 @@ import {
 } from './styles'
 
 interface CartItemProps {
+  id: string
   name: string
   image: string
   price: number
-  quantity: string | number
+  quantity: number
 }
 
-export function CartItem({ name, image, price, quantity }: CartItemProps) {
+export function CartItem({ id, name, image, price, quantity }: CartItemProps) {
+  const { cart, removeFromCart, decrementProduct, incrementProduct } =
+    useContext(CoffeeContext)
+
+  function handleDeleteProductFromCart() {
+    if (id) {
+      removeFromCart(id)
+    }
+  }
+
+  const productCartExists = cart && cart.find((item) => item.id)
+
+  function handleUpdateProductAmount(type: 'add' | 'remove') {
+    if (type === 'remove') {
+      if (quantity <= 1) return
+
+      if (productCartExists) decrementProduct(id)
+    } else {
+      if (productCartExists) incrementProduct(id)
+    }
+  }
+
   return (
     <Cart>
       <CartContent>
-        <img
-          src="https://s3-alpha-sig.figma.com/img/bcfa/72ad/62a8600eeded092c17fd14240624545e?Expires=1668384000&Signature=atITYlomvBILB5NMZVbyKf1fRk5kR2JGxHL845X3ECGrvlQCUaFQlq4BOYqRqclL0w1uzl2OdPLE6oaqDRsEsd0UV9T40J1X~nUjOZcOCYOO2eSQsnyh12c9MG7jK-wOAB0oW3szJ2-X2ZQdbkcLKgMoQizje4AyZ3vDuJDkj9rN5QkEQlxJtQHLaluUbBTsthmOlhS1~7MOjb5NFagpIfgRa67lQEeJVioSX39zE4ep4LI4ncSH2FwzgniJsRdgtxDq0L9pt9GCLdyhuGVCIbQDZmSdrpf9EeYZUbrW6KfN220Erjaulnuuj76c26At-QGmE4GBGzKRM7~g2hkMEg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
-          alt=""
-        />
+        <img src={image} alt="" />
         <CartInfo>
           <strong>{name}</strong>
           <div>
             <CartOrderButton>
-              <button>
+              <button onClick={() => handleUpdateProductAmount('remove')}>
                 <Minus color="#8047F8" size={14} weight="regular" />
               </button>
               <span>{quantity}</span>
-              <button>
+              <button onClick={() => handleUpdateProductAmount('add')}>
                 <Plus color="#8047F8" size={14} weight="regular" />
               </button>
             </CartOrderButton>
-            <CartRemoveButton>
+            <CartRemoveButton onClick={handleDeleteProductFromCart}>
               <Trash color="#8047F8" size={16} weight="regular" />
               <span>REMOVER</span>
             </CartRemoveButton>

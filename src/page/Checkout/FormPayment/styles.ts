@@ -1,25 +1,4 @@
-import * as polished from 'polished'
-import styled, { css } from 'styled-components'
-
-export const Container = styled.form`
-  width: 1120px;
-  max-width: 100%;
-  margin: 40px auto 0 auto;
-  padding: 0 1rem;
-
-  display: grid;
-  grid-template-columns: 640px 28rem;
-  justify-content: center;
-  gap: 2rem;
-
-  @media (max-width: 1080px) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (max-width: 960px) {
-    grid-template-columns: 1fr;
-  }
-`
+import styled from 'styled-components'
 
 export const Title = styled.h2`
   font-family: 'Baloo 2';
@@ -137,11 +116,7 @@ export const Input = styled.div<InputProps>`
   }
 `
 
-interface PaymentMethodButtonProps {
-  active?: boolean
-}
-
-export const PaymentMethodButton = styled.button<PaymentMethodButtonProps>`
+export const PaymentMethodButton = styled.button`
   width: 11.1669rem;
   height: 3.1875rem;
   display: flex;
@@ -164,15 +139,11 @@ export const PaymentMethodButton = styled.button<PaymentMethodButtonProps>`
 
   cursor: pointer;
 
-  border: 1px solid ${({ theme }) => theme.purple};
-
-  ${({ active, theme }) =>
-    active &&
-    css`
-      background-color: ${polished.darken(0.1, theme['purple-light'])};
-    `}
-
   &:hover {
+    background-color: ${({ theme }) => theme['base-hover']};
+  }
+
+  &:focus {
     border: 1px solid ${({ theme }) => theme.purple};
     background-color: ${({ theme }) => theme['purple-light']};
   }
@@ -180,63 +151,4 @@ export const PaymentMethodButton = styled.button<PaymentMethodButtonProps>`
   @media (max-width: 640px) {
     flex: auto;
   }
-`
-export const List = styled.div`
-  width: 100%;
-  margin: 24px 0;
-
-  ul {
-    list-style: none;
-
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      font-size: 14px;
-      color: ${({ theme }) => theme['base-text']};
-
-      & + li {
-        margin-top: 12px;
-      }
-
-      &:last-child,
-      &:last-child > span {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: ${({ theme }) => theme['base-subtitle']};
-      }
-
-      span {
-        font-size: 1rem;
-        color: ${({ theme }) => theme['base-text']};
-      }
-    }
-  }
-`
-export const ConfirmButton = styled.button`
-  width: 100%;
-  height: 2.875rem;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 8px;
-  gap: 4px;
-
-  background-color: ${({ theme }) => theme.yellow};
-  border-radius: 6px;
-
-  border: none;
-  outline: none;
-
-  font-weight: 700;
-  font-size: 0.875rem;
-  line-height: 1.6;
-
-  text-transform: uppercase;
-
-  color: ${({ theme }) => theme.white};
-  cursor: pointer;
 `

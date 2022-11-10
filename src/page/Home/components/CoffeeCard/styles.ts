@@ -122,7 +122,6 @@ export const CoffeeOrderButton = styled.div`
 
 interface ButtonTypes {
   fill: DefaultThemeType
-  iconColor: DefaultThemeType
 }
 
 export const CoffeeCartButton = styled.button<ButtonTypes>`
@@ -145,18 +144,10 @@ export const CoffeeCartButton = styled.button<ButtonTypes>`
   color: ${(props) => props.theme['purple-dark']};
   background-color: ${(props) => props.theme[props.fill]};
 
+  cursor: pointer;
+
   &:hover {
     background-color: ${({ theme }) => theme.purple};
-  }
-
-  a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  svg {
-    color: ${(props) => props.theme[props.iconColor]};
   }
 
   .button-legend {
