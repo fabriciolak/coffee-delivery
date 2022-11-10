@@ -53,17 +53,25 @@ Faça um clone do projeto e acesse a pasta criada.
 ```
 Para iniciá-lo, siga os passos abaixo:
 
-# Instalar as dependências
+## 👾 Instalar as dependências
 Aliases: ``` i ```
 ```
   $ pnpm install
 ```
 
-# Iniciar o projeto
+## 😎 Iniciar o projeto
 ```
   $ pnpm dev
 ```
 A aplicação estará disponível no endereço http://localhost:3000.
+
+## 🎨 Layout
+Acesse o layout do desafio
+
+Criado com Figma.
+
+<a href="https://www.figma.com/file/ewcmQhaPxFVbRF22VWxa98/Coffee-Delivery-(Copy)?node-id=0%3A1" target="_blank">Coffee Delivery</a>
+
 
 <h1 align="center">
   <a href="https://andrejr.dev">
