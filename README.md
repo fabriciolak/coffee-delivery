@@ -74,7 +74,7 @@ Criado com Figma.
 
 
 <h1 align="center">
-  <a href="https://andrejr.dev">
+  <a href="https://www.github.com/fabriciolak">
     <img alt="Feito por Fab´ricio" src="https://img.shields.io/badge/Desenvolvido%20por-Fabr%C3%ADcio%20Silva-green">
   </a>
 </h1>
