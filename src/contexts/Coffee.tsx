@@ -44,7 +44,13 @@ interface CoffeeContextType {
 export const CoffeeContext = createContext({} as CoffeeContextType)
 
 export function CoffeeContextProvider({ children }: CoffeeContextProps) {
-  const [state, dispatch] = useReducer(coffeeReducer, { cart: [] })
+  const [cartState, dispatch] = useReducer(coffeeReducer, { cart: [] }, () => {
+    const storedStateJson = localStorage.getItem('@coffee-delivery-cart')
+    if (storedStateJson) return JSON.parse(storedStateJson)
+  })
+
+  console.log(cartState)
+
   const [totalProducts, setTotalProducts] = useState<ProductCartTotal>({
     total: 0,
     quantityProducts: 0,
@@ -84,17 +90,19 @@ export function CoffeeContextProvider({ children }: CoffeeContextProps) {
     clearCart()
   }
 
-  const cart = state.cart
-
-  console.log(cart)
+  const { cart } = cartState
 
   const newCart = new Map()
-
-  console.log(confirmOrder)
 
   cart.forEach((item) => {
     newCart.set(item.id, item)
   })
+
+  useEffect(() => {
+    const cartStateJson = JSON.stringify(cartState)
+
+    localStorage.setItem('@coffee-delivery-cart', cartStateJson)
+  }, [cartState])
 
   useEffect(() => {
     const totalPayable = cart.reduce(
