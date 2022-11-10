@@ -47,11 +47,17 @@ export function CartItem({ id, name, image, price, quantity }: CartItemProps) {
           <strong>{name}</strong>
           <div>
             <CartOrderButton>
-              <button onClick={() => handleUpdateProductAmount('remove')}>
+              <button
+                type="button"
+                onClick={() => handleUpdateProductAmount('remove')}
+              >
                 <Minus color="#8047F8" size={14} weight="regular" />
               </button>
               <span>{quantity}</span>
-              <button onClick={() => handleUpdateProductAmount('add')}>
+              <button
+                type="button"
+                onClick={() => handleUpdateProductAmount('add')}
+              >
                 <Plus color="#8047F8" size={14} weight="regular" />
               </button>
             </CartOrderButton>
